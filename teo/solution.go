@@ -92,7 +92,7 @@ func main() {
 	}
 
 	genNames := []string{"quadA", "quadB", "quadC", "quadD", "quadE"}
-	var matches []string
+	var matchedGenerators []string
 
 	for _, name := range genNames {
 		out, found, err := runGenerator(name, w, h)
@@ -103,7 +103,7 @@ func main() {
 			continue
 		}
 		if bytes.Equal(out, []byte(input)) {
-			matches = append(matches, fmt.Sprintf("[%s] [%d] [%d]", name, w, h))
+			matchedGenerators = append(matchedGenerators, fmt.Sprintf("[%s] [%d] [%d]", name, w, h))
 		}
 	}
 

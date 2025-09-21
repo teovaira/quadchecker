@@ -107,11 +107,11 @@ func main() {
 		}
 	}
 
-	if len(matches) == 0 {
+	if len(matchedGenerators) == 0 {
 		fmt.Println("Not a quad function")
 		return
 	}
 
-	sort.Strings(matches)
-	fmt.Println(strings.Join(matches, " || "))
+	sort.Strings(matchedGenerators)
+	fmt.Println(strings.Join(matchedGenerators, " || "))
 }

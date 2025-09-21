@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -75,29 +74,22 @@ func runGenerator(name string, w, h int) ([]byte, bool, error) {
 	path, err := exec.LookPath(name)
 	if err != nil {
 		// If not found in PATH, try local directory
-		alt1 := "." + string(os.PathSeparator) + name
-		if _, statErr := os.Stat(alt1); statErr == nil {
-			path = alt1
+		progName := "." + string(os.PathSeparator) + name
+		if _, statErr := os.Stat(progName); statErr == nil {
+			path = progName
 		} else {
-			alt2 := filepath.Join(".", name)
-			if _, statErr2 := os.Stat(alt2); statErr2 == nil {
-				path = alt2
-			} else {
-				// Generator not found
-				return nil, false, nil
-			}
+			// Generator not found
+			return nil, false, nil // not found
 		}
 	}
-
 	// Run the generator with w and h as arguments
 	cmd := exec.Command(path, strconv.Itoa(w), strconv.Itoa(h))
 	genOutput, runErr := cmd.Output()
 	return genOutput, true, runErr
 }
 
-
-	// Read the input shape
-	func main () {
+// Read the input shape
+func main() {
 	input, err := readStdin()
 	if err != nil {
 		fmt.Println("Not a quad function")
@@ -135,5 +127,4 @@ func runGenerator(name string, w, h int) ([]byte, bool, error) {
 
 	sort.Strings(matchedGenerators)
 	fmt.Println(strings.Join(matchedGenerators, " || "))
-
 }

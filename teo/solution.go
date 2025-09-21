@@ -95,14 +95,14 @@ func main() {
 	var matchedGenerators []string
 
 	for _, name := range genNames {
-		out, found, err := runGenerator(name, w, h)
+		genOutput, found, err := runGenerator(name, w, h)
 		if !found {
 			continue
 		}
 		if err != nil {
 			continue
 		}
-		if bytes.Equal(out, []byte(input)) {
+		if bytes.Equal(genOutput, []byte(input)) {
 			matchedGenerators = append(matchedGenerators, fmt.Sprintf("[%s] [%d] [%d]", name, w, h))
 		}
 	}

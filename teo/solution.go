@@ -61,18 +61,13 @@ func runGenerator(name string, w, h int) ([]byte, bool, error) {
 	path, err := exec.LookPath(name)
 	if err != nil {
 
-		alt1 := "." + string(os.PathSeparator) + name
-		if _, statErr := os.Stat(alt1); statErr == nil {
-			path = alt1
+		progName := filepath.Join(".", name)
+		if _, statErr2 := os.Stat(progName); statErr2 == nil {
+			path = progName
 		} else {
-
-			alt2 := filepath.Join(".", name)
-			if _, statErr2 := os.Stat(alt2); statErr2 == nil {
-				path = alt2
-			} else {
-				return nil, false, nil
-			}
+			return nil, false, nil
 		}
+
 	}
 	cmd := exec.Command(path, strconv.Itoa(w), strconv.Itoa(h))
 	genOutput, runErr := cmd.Output()
